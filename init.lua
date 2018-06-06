@@ -2,6 +2,10 @@
 -- https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations
 
 
+---------------------------------------------------------
+-- loading spoons
+---------------------------------------------------------
+
 -- load spoon of auto-reload config when saving config
 -- http://www.hammerspoon.org/Spoons/ReloadConfiguration.html
 hs.loadSpoon("ReloadConfiguration")
@@ -14,7 +18,13 @@ end)
 hs.alert.show("Config loaded")
 
 
+hs.loadSpoon("Caffeine")
+spoon.Caffeine:start()
+
+
+---------------------------------------------------------
 -- window management
+---------------------------------------------------------
 -- https://github.com/miromannino/miro-windows-manager
 -- local hyper = {"ctrl", "alt", "cmd"}
 local hyper = {"alt", "cmd"}
@@ -76,21 +86,27 @@ hs.hotkey.bind({"cmd", "alt"}, "L", function()
     win:setFrame(f)
 end)
 
--- 
-caffeine = hs.menubar.new()
-function setCaffeineDisplay(state)
-  if state then
-    caffeine:setTitle("AWAKE")
-  else
-    caffeine:setTitle("SLEEPY")
+
+---------------------------------------------------------
+-- wifi events
+---------------------------------------------------------
+wifiWatcher = nil
+homeSSID = "sakura"
+lastSSID = hs.wifi.currentNetwork()
+
+function ssidChangedCallback()
+  newSSID = hs.wifi.currentNetwork()
+
+  if newSSID == homeSSID and lastSSID ~= homeSSID then
+    -- We just joined our home WiFi network
+    hs.audiodevice.defaultOutputDevice():setVolume(25)
+  elseif newSSID ~= homeSSID and lastSSID == homeSSID then
+    -- We just departed our home WiFi network
+    hs.audiodevice.defaultOutputDevice():setVolume(0)
   end
+
+  lastSSID = newSSID
 end
 
-function caffeineClicked()
-  setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
-end
-
-if caffeine then
-  caffeine:setClickCallback(caffeineClicked)
-  setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
-end
+wifiWatcher = hs.wifi.watcher.new(ssidChangedCallback)
+wifiWatcher:start()
