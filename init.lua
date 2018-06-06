@@ -1,4 +1,9 @@
+-- sample configs
+-- https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations
+
+
 -- load spoon of auto-reload config when saving config
+-- http://www.hammerspoon.org/Spoons/ReloadConfiguration.html
 hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
@@ -9,6 +14,8 @@ end)
 hs.alert.show("Config loaded")
 
 
+-- window management
+-- https://github.com/miromannino/miro-windows-manager
 -- local hyper = {"ctrl", "alt", "cmd"}
 local hyper = {"alt", "cmd"}
 
