@@ -1,3 +1,29 @@
+-- load spoon of auto-reload config when saving config
+hs.loadSpoon("ReloadConfiguration")
+spoon.ReloadConfiguration:start()
+
+-- hotkey to reload config
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
+    hs.reload()
+end)
+hs.alert.show("Config loaded")
+
+
+-- local hyper = {"ctrl", "alt", "cmd"}
+local hyper = {"alt", "cmd"}
+
+hs.loadSpoon("MiroWindowsManager")
+
+-- hs.window.animationDuration = 0.01
+hs.window.animationDuration = 0
+spoon.MiroWindowsManager:bindHotkeys({
+    up = {hyper, "up"},
+    right = {hyper, "right"},
+    down = {hyper, "down"},
+    left = {hyper, "left"},
+    fullscreen = {hyper, "f"}
+})
+
 -- move window to left by 10px
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "H", function()
     local win = hs.window.focusedWindow()
@@ -42,3 +68,22 @@ hs.hotkey.bind({"cmd", "alt"}, "L", function()
     f.h = max.h
     win:setFrame(f)
 end)
+
+-- 
+caffeine = hs.menubar.new()
+function setCaffeineDisplay(state)
+  if state then
+    caffeine:setTitle("AWAKE")
+  else
+    caffeine:setTitle("SLEEPY")
+  end
+end
+
+function caffeineClicked()
+  setCaffeineDisplay(hs.caffeinate.toggle("displayIdle"))
+end
+
+if caffeine then
+  caffeine:setClickCallback(caffeineClicked)
+  setCaffeineDisplay(hs.caffeinate.get("displayIdle"))
+end
