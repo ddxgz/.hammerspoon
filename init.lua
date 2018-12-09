@@ -58,6 +58,34 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "L", function()
 end)
 
 
+-- move and resize window to left, as 1/1.6 max size
+hs.hotkey.bind({"cmd", "alt"}, "J", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x
+    f.y = max.y
+    f.w = max.w / 1.6
+    f.h = max.h
+    win:setFrame(f)
+end)
+
+-- move and resize window to right, as 1/1.6 max size
+hs.hotkey.bind({"cmd", "alt"}, "K", function()
+    local win = hs.window.focusedWindow()
+    local f = win:frame()
+    local screen = win:screen()
+    local max = screen:frame()
+
+    f.x = max.x + max.w - (max.w / 1.6) + 10
+    f.y = max.y
+    f.w = max.w / 1.6
+    f.h = max.h
+    win:setFrame(f)
+end)
+
 -- move and resize window to left, as 1/1.3 max size
 hs.hotkey.bind({"cmd", "alt"}, "H", function()
     local win = hs.window.focusedWindow()
