@@ -41,6 +41,37 @@ spoon.MiroWindowsManager:bindHotkeys({
     fullscreen = {hyper, "f"}
 })
 
+
+-- -- move window to another screen in the cycle
+-- hs.hotkey.bind({"cmd", "alt", "ctrl"}, "N", function()
+--     local win = hs.window.focusedWindow()
+--     local screens = hs.screen.allScreens()
+--     local curScr = win:screen()
+--     win:moveToScreen(screens[3])
+-- end)
+
+-- move window to screen
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "up", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenNorth()
+end)
+-- move window to screen
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "down", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenSouth()
+end)
+-- move window to screen
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenWest()
+end)
+-- move window to screen
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
+    local win = hs.window.focusedWindow()
+    win:moveOneScreenEast()
+end)
+
+
 -- move window to left by 10px
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "H", function()
     local win = hs.window.focusedWindow()
