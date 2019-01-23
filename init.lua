@@ -42,13 +42,27 @@ spoon.MiroWindowsManager:bindHotkeys({
 })
 
 
--- -- move window to another screen in the cycle
--- hs.hotkey.bind({"cmd", "alt", "ctrl"}, "N", function()
---     local win = hs.window.focusedWindow()
---     local screens = hs.screen.allScreens()
---     local curScr = win:screen()
---     win:moveToScreen(screens[3])
--- end)
+-- move window to another screen in the cycle
+hs.hotkey.bind({"cmd", "alt", "ctrl"}, "N", function()
+    local win = hs.window.focusedWindow()
+    local curScr = win:screen()
+
+    function getNextScreen(scr)
+      local nextIndex = 1
+      local screens = hs.screen.allScreens()
+      for i = 1, #screens do
+        if scr == screens[i] then
+          if i ~= #screens then
+            nextIndex = i + 1
+          end
+        end
+      end
+      return screens[nextIndex]
+    end
+
+    local nextScr = getNextScreen(curScr)
+    win:moveToScreen(nextScr)
+end)
 
 -- move window to screen
 hs.hotkey.bind({"cmd", "alt", "ctrl"}, "up", function()
