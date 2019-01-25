@@ -2,6 +2,13 @@
 -- https://github.com/Hammerspoon/hammerspoon/wiki/Sample-Configurations
 
 
+
+-- Set base key combo
+metaKey      = {'cmd', 'alt'}
+superMetaKey = {'cmd', 'alt', 'ctrl'}
+launchKey      = {'cmd', 'alt', 'shift'}
+
+
 ---------------------------------------------------------
 -- loading spoons
 ---------------------------------------------------------
@@ -48,8 +55,29 @@ function mouseHighlight()
   -- Set a timer to delete the circle after 3 seconds
   mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
 end
-hs.hotkey.bind({"cmd","alt","shift"}, "D", mouseHighlight)
+hs.hotkey.bind(superMetaKey, "M", mouseHighlight)
 
+---------------------------------------------------------
+
+
+---------------------------------------------------------
+-- app launching
+---------------------------------------------------------
+function bindAppKey(key,appID)
+  hs.hotkey.bind(launchKey,
+                 key,
+                 function()
+                   hs.application.launchOrFocusByBundleID(appID)
+                 end
+  )
+end
+
+bindAppKey('f', 'org.mozilla.firefox')
+bindAppKey('e', 'org.gnu.Emacs')
+bindAppKey('t', 'com.googlecode.iterm2')
+bindAppKey('v', 'com.microsoft.VSCode')
+bindAppKey('c', 'com.apple.iCal')
+-- bindAppKey('m', 'com.apple.mail.mailbox')
 ---------------------------------------------------------
 
 
