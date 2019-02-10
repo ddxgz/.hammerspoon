@@ -29,6 +29,13 @@ hs.loadSpoon("Caffeine")
 spoon.Caffeine:start()
 
 
+hs.loadSpoon("ClipboardTool")
+spoon.ClipboardTool:start()
+spoon.ClipboardTool:bindHotkeys({
+    -- show_clipboard = {metaKey, "C"},
+    toggle_clipboard = {metaKey, "C"}
+})
+
 ---------------------------------------------------------
 -- double quit app
 -- from https://github.com/raulchen/dotfiles
