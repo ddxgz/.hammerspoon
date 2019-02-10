@@ -30,6 +30,26 @@ spoon.Caffeine:start()
 
 
 ---------------------------------------------------------
+-- double quit app
+-- from https://github.com/raulchen/dotfiles
+---------------------------------------------------------
+local quitModal = hs.hotkey.modal.new('cmd','q')
+
+function quitModal:entered()
+  hs.alert.show("Press Cmd+Q again to quit", 1)
+  hs.timer.doAfter(1, function() quitModal:exit() end)
+end
+
+local function doQuit()
+  local app = hs.application.frontmostApplication()
+  app:kill()
+end
+
+quitModal:bind('cmd', 'q', doQuit)
+quitModal:bind('', 'escape', function() quitModal:exit() end)
+
+
+---------------------------------------------------------
 -- find the mouse point - from hammperspoon getting started
 ---------------------------------------------------------
 mouseCircle = nil
@@ -75,7 +95,8 @@ end
 bindAppKey('f', 'org.mozilla.firefox')
 bindAppKey('e', 'org.gnu.Emacs')
 bindAppKey('t', 'com.googlecode.iterm2')
-bindAppKey('v', 'com.microsoft.VSCode')
+-- bindAppKey('v', 'com.microsoft.VSCode')
+bindAppKey('v', 'com.coppertino.Vox')
 bindAppKey('c', 'com.apple.iCal')
 -- bindAppKey('m', 'com.apple.mail.mailbox')
 ---------------------------------------------------------
