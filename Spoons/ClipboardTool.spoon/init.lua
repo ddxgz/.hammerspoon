@@ -22,6 +22,9 @@ local setSetting = function(label, value)   hs.settings.set(obj.name.."."..label
 
 --- ClipboardTool.frequency
 --- Variable
+-----by pcx
+obj.show_alert = false
+------
 --- Speed in seconds to check for clipboard changes. If you check too frequently, you will degrade performance, if you check sparsely you will loose copies. Defaults to 0.8.
 obj.frequency = 0.8
 
@@ -363,7 +366,9 @@ function obj:checkAndStorePasteboard()
                 size = #current_clipboard
                 end
             end
-            hs.alert.show("Copied " .. size .. " chars")
+            if obj.show_alert then
+                hs.alert.show("Copied " .. size .. " chars")
+            end
             self.logger.df("Adding %s to clipboard history", current_clipboard)
             self:pasteboardToClipboard(current_clipboard)
          else

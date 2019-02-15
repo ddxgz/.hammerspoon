@@ -28,8 +28,14 @@ hs.alert.show("Config loaded")
 hs.loadSpoon("Caffeine")
 spoon.Caffeine:start()
 
+-- hs.loadSpoon("HSKeybindings")
+-- -- spoon.HSKeybindings:start()
+-- hs.hotkey.bind(superMetaKey, "K", spoon.HSKeybindings:show())
+
 
 hs.loadSpoon("ClipboardTool")
+spoon.ClipboardTool.show_in_menubar = false
+-- spoon.ClipboardTool.show_alert = true
 spoon.ClipboardTool:start()
 spoon.ClipboardTool:bindHotkeys({
     -- show_clipboard = {metaKey, "C"},
