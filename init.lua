@@ -199,13 +199,8 @@ resizeGrad = 30
 hs.hotkey.bind(hyperKey, "]", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
-                 -- local screen = win:screen()
-                 -- local max = screen:frame()
 
-                 -- f.x = f.x + resizeGrad
-                 -- f.y = f.y
                  f.w = f.w + resizeGrad
-                 -- f.h = f.h
                  win:setFrame(f)
 
 end)
@@ -214,13 +209,8 @@ end)
 hs.hotkey.bind(hyperKey, "[", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
-                 -- local screen = win:screen()
-                 -- local max = screen:frame()
 
-                 -- f.x = f.x + resizeGrad
-                 -- f.y = f.y
                  f.w = f.w - resizeGrad
-                 -- f.h = f.h
                  win:setFrame(f)
 
 end)
@@ -229,30 +219,20 @@ end)
 hs.hotkey.bind(hyperKey, "o", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
-                 -- local screen = win:screen()
-                 -- local max = screen:frame()
 
-                 f.x = f.x - resizeGrad
-                 -- f.y = f.y
                  f.w = f.w + resizeGrad
-                 -- f.h = f.h
+                 f.x = f.x - resizeGrad
                  win:setFrame(f)
-
 end)
 
 -- decrease window size on the left edge
 hs.hotkey.bind(hyperKey, "p", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
-                 -- local screen = win:screen()
-                 -- local max = screen:frame()
 
-                 f.x = f.x + resizeGrad
-                 -- f.y = f.y
                  f.w = f.w - resizeGrad
-                 -- f.h = f.h
+                 f.x = f.x + resizeGrad
                  win:setFrame(f)
-
 end)
 
 
