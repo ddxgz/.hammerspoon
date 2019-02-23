@@ -4,9 +4,9 @@
 
 
 -- Set base key combo
-metaKey      = {'cmd', 'alt'}
-superMetaKey = {'cmd', 'alt', 'ctrl'}
-launchKey      = {'cmd', 'alt', 'shift'}
+hyperKey      = {'cmd', 'alt'}
+ctrlHyperKey = {'cmd', 'alt', 'ctrl'}
+shiftHyperKey      = {'cmd', 'alt', 'shift'}
 
 
 ---------------------------------------------------------
@@ -19,8 +19,8 @@ hs.loadSpoon("ReloadConfiguration")
 spoon.ReloadConfiguration:start()
 
 -- hotkey to reload config
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "R", function()
-    hs.reload()
+hs.hotkey.bind(ctrlHyperKey, "R", function()
+                 hs.reload()
 end)
 hs.alert.show("Config loaded")
 
@@ -30,7 +30,7 @@ spoon.Caffeine:start()
 
 -- hs.loadSpoon("HSKeybindings")
 -- -- spoon.HSKeybindings:start()
--- hs.hotkey.bind(superMetaKey, "K", spoon.HSKeybindings:show())
+-- hs.hotkey.bind(ctrlHyperKey, "K", spoon.HSKeybindings:show())
 
 
 hs.loadSpoon("ClipboardTool")
@@ -38,8 +38,8 @@ spoon.ClipboardTool.show_in_menubar = false
 -- spoon.ClipboardTool.show_alert = true
 spoon.ClipboardTool:start()
 spoon.ClipboardTool:bindHotkeys({
-    -- show_clipboard = {metaKey, "C"},
-    toggle_clipboard = {metaKey, "C"}
+    -- show_clipboard = {hyperKey, "C"},
+    toggle_clipboard = {hyperKey, "C"}
 })
 
 ---------------------------------------------------------
@@ -88,7 +88,7 @@ function mouseHighlight()
   -- Set a timer to delete the circle after 3 seconds
   mouseCircleTimer = hs.timer.doAfter(3, function() mouseCircle:delete() end)
 end
-hs.hotkey.bind(superMetaKey, "M", mouseHighlight)
+hs.hotkey.bind(ctrlHyperKey, "M", mouseHighlight)
 
 ---------------------------------------------------------
 
@@ -97,7 +97,7 @@ hs.hotkey.bind(superMetaKey, "M", mouseHighlight)
 -- app launching
 ---------------------------------------------------------
 function bindAppKey(key,appID)
-  hs.hotkey.bind(launchKey,
+  hs.hotkey.bind(shiftHyperKey,
                  key,
                  function()
                    hs.application.launchOrFocusByBundleID(appID)
@@ -119,63 +119,61 @@ bindAppKey('c', 'com.apple.iCal')
 -- window management
 ---------------------------------------------------------
 -- https://github.com/miromannino/miro-windows-manager
--- local hyper = {"ctrl", "alt", "cmd"}
-local hyper = {"alt", "cmd"}
 
 hs.loadSpoon("MiroWindowsManager")
 
 -- hs.window.animationDuration = 0.01
 hs.window.animationDuration = 0
 spoon.MiroWindowsManager:bindHotkeys({
-    up = {hyper, "up"},
-    right = {hyper, "right"},
-    down = {hyper, "down"},
-    left = {hyper, "left"},
-    fullscreen = {hyper, "f"}
+    up = {hyperKey, "up"},
+    right = {hyperKey, "right"},
+    down = {hyperKey, "down"},
+    left = {hyperKey, "left"},
+    fullscreen = {hyperKey, "f"}
 })
 
 
 -- move window to the next screen in the cycle
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "N", function()
-    local win = hs.window.focusedWindow()
-    local curScr = win:screen()
+hs.hotkey.bind(ctrlHyperKey, "N", function()
+                 local win = hs.window.focusedWindow()
+                 local curScr = win:screen()
 
-    function getNextScreen(scr)
-      local nextIndex = 1
-      local screens = hs.screen.allScreens()
-      for i = 1, #screens do
-        if scr == screens[i] then
-          if i ~= #screens then
-            nextIndex = i + 1
-          end
-        end
-      end
-      return screens[nextIndex]
-    end
+                 function getNextScreen(scr)
+                   local nextIndex = 1
+                   local screens = hs.screen.allScreens()
+                   for i = 1, #screens do
+                     if scr == screens[i] then
+                       if i ~= #screens then
+                         nextIndex = i + 1
+                       end
+                     end
+                   end
+                   return screens[nextIndex]
+                 end
 
-    local nextScr = getNextScreen(curScr)
-    win:moveToScreen(nextScr)
+                 local nextScr = getNextScreen(curScr)
+                 win:moveToScreen(nextScr)
 end)
 
 -- move window to screen
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "up", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenNorth()
+hs.hotkey.bind(ctrlHyperKey, "up", function()
+                 local win = hs.window.focusedWindow()
+                 win:moveOneScreenNorth()
 end)
 -- move window to screen
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "down", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenSouth()
+hs.hotkey.bind(ctrlHyperKey, "down", function()
+                 local win = hs.window.focusedWindow()
+                 win:moveOneScreenSouth()
 end)
 -- move window to screen
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "left", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenWest()
+hs.hotkey.bind(ctrlHyperKey, "left", function()
+                 local win = hs.window.focusedWindow()
+                 win:moveOneScreenWest()
 end)
 -- move window to screen
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "right", function()
-    local win = hs.window.focusedWindow()
-    win:moveOneScreenEast()
+hs.hotkey.bind(ctrlHyperKey, "right", function()
+                 local win = hs.window.focusedWindow()
+                 win:moveOneScreenEast()
 end)
 
 
@@ -196,8 +194,70 @@ hs.hotkey.bind({"cmd", "alt", "ctrl"}, "L", function()
 end)
 
 
+resizeGrad = 30
+-- increase window size on the right edge
+hs.hotkey.bind(hyperKey, "]", function()
+                 local win = hs.window.focusedWindow()
+                 local f = win:frame()
+                 -- local screen = win:screen()
+                 -- local max = screen:frame()
+
+                 -- f.x = f.x + resizeGrad
+                 -- f.y = f.y
+                 f.w = f.w + resizeGrad
+                 -- f.h = f.h
+                 win:setFrame(f)
+
+end)
+
+-- decrease window size on the right edge
+hs.hotkey.bind(hyperKey, "[", function()
+                 local win = hs.window.focusedWindow()
+                 local f = win:frame()
+                 -- local screen = win:screen()
+                 -- local max = screen:frame()
+
+                 -- f.x = f.x + resizeGrad
+                 -- f.y = f.y
+                 f.w = f.w - resizeGrad
+                 -- f.h = f.h
+                 win:setFrame(f)
+
+end)
+
+-- increase window size on the left edge
+hs.hotkey.bind(hyperKey, "o", function()
+                 local win = hs.window.focusedWindow()
+                 local f = win:frame()
+                 -- local screen = win:screen()
+                 -- local max = screen:frame()
+
+                 f.x = f.x - resizeGrad
+                 -- f.y = f.y
+                 f.w = f.w + resizeGrad
+                 -- f.h = f.h
+                 win:setFrame(f)
+
+end)
+
+-- decrease window size on the left edge
+hs.hotkey.bind(hyperKey, "p", function()
+                 local win = hs.window.focusedWindow()
+                 local f = win:frame()
+                 -- local screen = win:screen()
+                 -- local max = screen:frame()
+
+                 f.x = f.x + resizeGrad
+                 -- f.y = f.y
+                 f.w = f.w - resizeGrad
+                 -- f.h = f.h
+                 win:setFrame(f)
+
+end)
+
+
 resizeWidth32 = 1.5
-resizeWidth43 = 1.2
+resizeWidth43 = 1.3
 
 -- move and resize window to left, as 1/1.6 max size
 hs.hotkey.bind({"cmd", "alt"}, "J", function()
@@ -254,6 +314,7 @@ hs.hotkey.bind({"cmd", "alt"}, "L", function()
     f.h = max.h
     win:setFrame(f)
 end)
+
 
 
 ---------------------------------------------------------
