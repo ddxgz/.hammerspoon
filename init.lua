@@ -111,7 +111,9 @@ bindAppKey('t', 'com.googlecode.iterm2')
 -- bindAppKey('v', 'com.microsoft.VSCode')
 bindAppKey('v', 'com.coppertino.Vox')
 bindAppKey('c', 'com.apple.iCal')
+bindAppKey('w', 'desktop.WhatsApp')
 -- bindAppKey('m', 'com.apple.mail.mailbox')
+bindAppKey('m', 'com.readdle.smartemail-Mac')
 ---------------------------------------------------------
 
 
@@ -216,7 +218,7 @@ hs.hotkey.bind(hyperKey, "[", function()
 end)
 
 -- increase window size on the left edge
-hs.hotkey.bind(hyperKey, "o", function()
+hs.hotkey.bind(hyperKey, "q", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
 
@@ -226,7 +228,7 @@ hs.hotkey.bind(hyperKey, "o", function()
 end)
 
 -- decrease window size on the left edge
-hs.hotkey.bind(hyperKey, "p", function()
+hs.hotkey.bind(hyperKey, "w", function()
                  local win = hs.window.focusedWindow()
                  local f = win:frame()
 
